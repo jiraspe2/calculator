@@ -1,86 +1,58 @@
 package instructions;
 
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class InstructionLoader {
 
+	/**
+	 * List of instructions as given from file. If file contains
+	 * just apply, then this list is empty.
+	 */
 	ArrayList<Instruction> instructions;
+	/**
+	 * The basic value for the calculator.
+	 */
 	int apply;
+	/**
+	 * Index of the instruction, that should be served as next
+	 */
 	int currentInstructionIndex;
 	
-	String cesta;
-	
-	public String getCesta(){
-		return cesta;
-	}
-	
+	/**
+	 * 
+	 * @param filename File with instructions.
+	 */
 	public InstructionLoader(String filename){
-		
-		Path currentRelativePath = Paths.get("");
-		String s = currentRelativePath.toAbsolutePath().toString();
-		filename = s + "/" + filename;
-		
-		File file = new File(filename);
-		BufferedReader reader = null;
-		
 		instructions = new ArrayList<Instruction>();
-		try {
-		    reader = new BufferedReader(new FileReader(file));
-		    String text = null;
-
-		    while ((text = reader.readLine()) != null) {
-		        String [] line = text.split(" ");
-		        if(line[0].equals("apply")){
-		        	apply = Integer.parseInt(line[1]);
-		        	currentInstructionIndex = 0;
-		        	return;
-		        }
-		        instructions.add(new Instruction(
-		        		Integer.parseInt(line[1]),
-		        		Instruction.getTypeFromString(line[0])));
-		    }
-		} catch (FileNotFoundException e) {
-		    e.printStackTrace();
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-		    try {
-		        if (reader != null) {
-		            reader.close();
-		        }
-		    } catch (IOException e) {
-		    }
-		}
 		currentInstructionIndex = 0;
-
-		/*
+		
+		filename = Paths.get("").toAbsolutePath().toString() + "/" + filename;
+		File file = new File(filename);
+		Scanner scanner;
+		try {
+			scanner = new Scanner(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return;
+		}
+		
 		while(scanner.hasNextLine()){
 			String line = scanner.nextLine();
-			String[] arr = line.split(" "); 			
-			if(arr[0].equals("APPLY")){
-				this.apply = Integer.parseInt(arr[1]);
+			String instruction = line.split(" ")[0];
+			int operand = Integer.parseInt(line.split(" ")[1]);
+			if(instruction.equals("apply")){
+				apply = operand;
 				break;
 			}
-			String type = "ADD";
-			int operand = 1;
-			instructions.add(new Instruction(
-					operand,Instruction.getTypeFromString(type)));
+			instructions.add(new Instruction(operand,
+					Instruction.getTypeFromString(instruction)));
 		}
 		scanner.close();
-		currentInstructionIndex = 0;*/
 	}
 	
 	public int getApply(){
@@ -93,10 +65,4 @@ public class InstructionLoader {
 		}
 		return instructions.get(currentInstructionIndex++);
 	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

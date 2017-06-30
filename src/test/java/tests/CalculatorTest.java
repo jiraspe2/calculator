@@ -54,13 +54,4 @@ public class CalculatorTest {
 		Calculator calculator = new Calculator(11);
 		calculator.executeInstruction(null);
 	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

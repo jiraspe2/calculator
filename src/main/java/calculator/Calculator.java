@@ -1,6 +1,9 @@
 package calculator;
 
+import java.io.File;
+
 import instructions.Instruction;
+import instructions.InstructionLoader;
 
 public class Calculator {
 	
@@ -36,18 +39,15 @@ public class Calculator {
 		}
 		if(instruction.getType().equals(Instruction.Type.ADD)){
 			result = result + instruction.getOperand();
-		}else{
-			if(instruction.getType() == Instruction.Type.MULTIPLY){
-				result = result * instruction.getOperand();
-			}else{
-				if(instruction.getType() == Instruction.Type.SUBTRACT){
-					result = result - instruction.getOperand();
-				}else{
-					if(instruction.getType() == Instruction.Type.DIVIDE){
-						result = result / instruction.getOperand();
-					}
-				}
-			}
+		}
+		if(instruction.getType() == Instruction.Type.MULTIPLY){
+			result = result * instruction.getOperand();
+		}
+		if(instruction.getType() == Instruction.Type.SUBTRACT){
+			result = result - instruction.getOperand();
+		}
+		if(instruction.getType() == Instruction.Type.DIVIDE){
+			result = result / instruction.getOperand();
 		}
 	}
 	
@@ -56,8 +56,23 @@ public class Calculator {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		if(args.length == 0 || args.length > 1){
+			System.out.println("Please enter only name of the file with instructions.");
+		}
+		File file = new File(args[0]);
+		if(file.exists() && !file.isDirectory()) { 
+			InstructionLoader instructionLoader = new InstructionLoader(args[0]);
+			Calculator calculator = new Calculator(instructionLoader.getApply());
+			Instruction instruction = instructionLoader.getNextInstruction();
+			while(instruction != null){
+				calculator.executeInstruction(instruction);
+				instruction = instructionLoader.getNextInstruction();
+			}
+			System.out.println(calculator.getResult());
+		}
+		else{
+			System.out.println("Invalid file name.");
+		}
 	}
 
 }
