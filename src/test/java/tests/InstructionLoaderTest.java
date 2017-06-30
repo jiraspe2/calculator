@@ -10,25 +10,19 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class InstructionLoaderTest {
-	@Test(expected = java.io.IOException.class)
-	public final void whenTheFileDoesNotExist(){
-		@SuppressWarnings("unused")
-		InstructionLoader instructionLoader =
-				new InstructionLoader("File_that_does_not_exist");
-	}
 	
 	@Test
 	public final void whenOnlyApplyIsInTheFile(){
 		InstructionLoader instructionLoader =
-				new InstructionLoader("test1");
+				new InstructionLoader("src/test/resources/test1");
 		assertEquals(1,instructionLoader.getApply());
-		assertEquals(null,instructionLoader.getNextInstruction());
+		assertNull(instructionLoader.getNextInstruction());
 	}
 	
 	@Test
 	public final void whenOneInstructionInTheFile(){
 		InstructionLoader instructionLoader =
-				new InstructionLoader("test2");
+				new InstructionLoader("src/test/resources/test2");
 		
 		assertEquals(5,instructionLoader.getApply());
 		
@@ -42,7 +36,7 @@ public class InstructionLoaderTest {
 	@Test
 	public final void whenMultipleInstructionsInTheFile(){
 		InstructionLoader instructionLoader =
-				new InstructionLoader("test3");
+				new InstructionLoader("src/test/resources/test3");
 		
 		assertEquals(4,instructionLoader.getApply());
 		
