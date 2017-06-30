@@ -1,0 +1,26 @@
+This repository contains the assignment of Calculator.
+
+You can find following commits here:
+1) In the first commit, there are tests and skeletons of classes
+2) In the second commit, there are implemented classes, that can pass all test
+3) In the third commit, there are refactorized classes & added comments
+4) The last commit includes this README :)
+I have done everything in the master, since there was no reason to make another branch
+
+How to install the app:
+The app works on Linux and not on Windows (since in some tests, there are platform dependant pathways, thank Bill for \ instead of /).
+Clone this github repository into your local folder and run maven:
+
+$ git clone https://github.com/jiraspe2/calculator
+$ cd calculator
+$ mvn package
+
+There are 9 test, all of the should be passed.
+
+If you want to run your app, type (in the root directory):
+$ java -cp target/calculator-0.0.1-SNAPSHOT.jar name_of_the_file
+
+There are 3 tests files included, so you can try i.e.:
+$ java -cp target/calculator-0.0.1-SNAPSHOT.jar calculator.Calculator src/test/resources/test3
+
+And that is pretty much all :0)
